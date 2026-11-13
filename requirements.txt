@@ -1,0 +1,12 @@
+Flask==3.0.2
+Werkzeug==3.0.1
+pandas==2.2.2
+numpy==2.0.1
+scikit-learn==1.6.1
+joblib==1.4.2
+matplotlib==3.9.1
+seaborn==0.13.2
+pefile
+python-whois
+xgboost
+
