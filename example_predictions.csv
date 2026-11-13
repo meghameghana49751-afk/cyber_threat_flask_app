@@ -1,0 +1,11 @@
+Message,Prediction,Spam_Probability,Ham_Probability,Confidence
+FREE entry to our weekly prize draw! Text WIN to 88888 now!,Spam,0.9999999999802043,1.9800746641425183e-11,0.9999999999802043
+Congratulations! You've won a free iPhone. Click here to claim your prize!,Spam,0.9999997041496027,2.958503905967576e-07,0.9999997041496027
+Claim your $1000 Walmart gift card! Limited time offer!,Spam,0.9999833807735852,1.6619226415116234e-05,0.9999833807735852
+URGENT: Your bank account needs verification. Please click the link to update your information.,Spam,0.9998520457518659,0.00014795424813137021,0.9998520457518659
+You have been selected for a special offer! Buy one get one free on all products!,Ham,0.2978207376495748,0.7021792623504198,0.7021792623504198
+Meeting rescheduled to 3 PM tomorrow. Please confirm your availability.,Ham,0.016599933110747304,0.9834000668892562,0.9834000668892562
+The project deadline has been extended to next Friday.,Ham,0.0057184364653938054,0.994281563534603,0.994281563534603
+Can you send me the report by EOD today?,Ham,0.00017800258598631177,0.9998219974140148,0.9998219974140148
+"Hey, are we still meeting for lunch tomorrow?",Ham,6.641370016314994e-07,0.9999993358629953,0.9999993358629953
+"Hi John, I'll be 5 minutes late for our meeting. Sorry!",Ham,4.2588813835255426e-07,0.9999995741118594,0.9999995741118594

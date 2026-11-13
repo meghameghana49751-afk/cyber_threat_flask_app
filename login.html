@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cyber Threat Prediction | Secure Login</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 20% 40%, #0a0f1f, #02050c);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 1.5rem;
+        }
+
+        /* animated matrix-like background with moving particles */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .cyber-bg::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(0deg, 
+                    rgba(0, 255, 255, 0.02) 0px, 
+                    rgba(0, 255, 255, 0.02) 2px, 
+                    transparent 2px, 
+                    transparent 60px),
+                repeating-linear-gradient(90deg, 
+                    rgba(0, 255, 255, 0.02) 0px, 
+                    rgba(0, 255, 255, 0.02) 2px, 
+                    transparent 2px, 
+                    transparent 60px);
+            animation: driftGrid 25s linear infinite;
+        }
+
+        @keyframes driftGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .cyber-bg::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0, 100, 150, 0.15), transparent 70%);
+        }
+
+        /* floating orbs effect */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.08), transparent);
+            filter: blur(40px);
+            z-index: -1;
+            animation: floatOrb 20s infinite alternate;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            100% { transform: translate(40px, 30px) scale(1.2); opacity: 0.6; }
+        }
+
+        /* main container */
+        .login-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            animation: fadeSlideUp 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card {
+            background: rgba(8, 18, 34, 0.7);
+            backdrop-filter: blur(18px);
+            border-radius: 2.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.35);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 255, 255, 0.1) inset;
+            padding: 2.2rem 2rem 2.2rem;
+            transition: transform 0.25s, box-shadow 0.3s;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 30px 55px -15px rgba(0, 200, 255, 0.25), 0 0 0 1px rgba(0, 255, 255, 0.4) inset;
+        }
+
+        /* header area */
+        .icon-circle {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .cyber-logo {
+            font-size: 3.2rem;
+            background: linear-gradient(145deg, #0ff, #2a6f8f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 12px #0ff6);
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #9cebff, #4bc0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            margin-top: 0.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .secure-badge {
+            text-align: center;
+            font-size: 0.7rem;
+            background: rgba(0, 255, 255, 0.12);
+            width: fit-content;
+            margin: 0.4rem auto 1.2rem auto;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            color: #9ad7ff;
+            border: 0.5px solid rgba(0, 255, 255, 0.3);
+        }
+
+        /* form groups */
+        .input-group {
+            margin-bottom: 1.6rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #b3e6ff;
+            margin-bottom: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #30c0ff;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(2, 15, 28, 0.75);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 2rem;
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #f0fcff;
+            transition: all 0.2s ease;
+            font-family: 'Inter', monospace;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2), 0 0 12px rgba(0, 255, 255, 0.4);
+            background: rgba(5, 22, 40, 0.9);
+        }
+
+        input::placeholder {
+            color: #5380a5;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        /* extras: toggle show password + login button */
+        .password-options {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .show-pwd-toggle {
+            font-size: 0.7rem;
+            color: #7bb5dd;
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .show-pwd-toggle:hover {
+            color: #0ff;
+            text-shadow: 0 0 2px #0ff;
+        }
+
+        .btn-login {
+            background: linear-gradient(95deg, #0c405c, #032136);
+            border: none;
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 3rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 0.6rem;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(95deg, #13668b, #052e44);
+            border-color: #0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px -8px rgba(0, 200, 255, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(1px);
+        }
+
+        /* register suggestion & footer */
+        .register-prompt {
+            text-align: center;
+            margin-top: 1.8rem;
+            font-size: 0.85rem;
+            color: #b7cef0;
+        }
+
+        .register-prompt a {
+            color: #0ff;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed #0ff;
+            transition: 0.2s;
+        }
+
+        .register-prompt a:hover {
+            color: #fff;
+            text-shadow: 0 0 4px #0ff;
+            border-bottom-color: #fff;
+        }
+
+        .security-footer {
+            background: rgba(0, 20, 40, 0.6);
+            border-radius: 2rem;
+            padding: 0.65rem 1rem;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 1.5rem;
+            border: 0.5px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .flash-messages {
+            margin-bottom: 1.2rem;
+        }
+
+        .flash {
+            background: rgba(220, 53, 69, 0.18);
+            border-left: 4px solid #ff5e7e;
+            padding: 0.7rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+            margin-bottom: 0.7rem;
+            color: #ffc2cf;
+        }
+
+        .flash.success {
+            background: rgba(0, 255, 180, 0.08);
+            border-left-color: #3effb0;
+            color: #c1ffe6;
+        }
+
+        .flash.warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-left-color: #ffc107;
+            color: #ffe2a3;
+        }
+
+        .small.muted {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 8px;
+            color: #628bb0;
+        }
+
+        @media (max-width: 550px) {
+            .glass-card {
+                padding: 1.6rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cyber-bg"></div>
+<div class="orb" style="width: 350px; height: 350px; bottom: -100px; left: -80px;"></div>
+<div class="orb" style="width: 450px; height: 450px; top: -150px; right: -100px; animation-duration: 25s;"></div>
+
+<div class="login-container">
+    <div class="glass-card">
+        <div class="icon-circle">
+            <i class="fas fa-fingerprint cyber-logo"></i>
+        </div>
+        <h2>Threat Access</h2>
+        <div class="secure-badge">
+            <i class="fas fa-shield-haltered"></i> 256-bit encrypted session
+        </div>
+
+        <!-- flash messages block -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}"><i class="fas fa-bell"></i> {{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('login_post') }}" id="loginForm">
+            <div class="input-group">
+                <label><i class="fas fa-at"></i> EMAIL</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="agent@cyberdefense.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-key"></i> PASSWORD</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" id="passwordField" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+                <div class="password-options">
+                    <button type="button" class="show-pwd-toggle" id="togglePasswordBtn">
+                        <i class="far fa-eye-slash" id="eyeIcon"></i> Show password
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Authenticate & Access
+                <i class="fas fa-arrow-right-to-bracket"></i>
+            </button>
+
+            <div class="register-prompt">
+                🔐 New to threat platform? <a href="{{ url_for('register') }}">Create secure profile →</a>
+            </div>
+
+            <div class="security-footer">
+                <i class="fas fa-shield-alt"></i>
+                <span>Multi-layer anomaly detection · Zero-trust ready</span>
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <p class="small muted">
+                <i class="fas fa-microchip"></i> Powered by KMeans+GMM · IP reputation & email scanner
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Toggle password visibility and interactive effects -->
+<script>
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const passwordField = document.getElementById('passwordField');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    toggleBtn.addEventListener('click', function() {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        if (type === 'text') {
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+            toggleBtn.innerHTML = '<i class="fas fa-eye" id="eyeIcon"></i> Hide password';
+        } else {
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+            toggleBtn.innerHTML = '<i class="fas fa-eye-slash" id="eyeIcon"></i> Show password';
+        }
+    });
+
+    // add a dynamic border glow on form input focus
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.parentElement.style.transform = 'translateX(2px)';
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.parentElement.style.transform = 'translateX(0)';
+        });
+    });
+
+    // background interactive tilt effect on card (light)
+    const card = document.querySelector('.glass-card');
+    card.addEventListener('mousemove', (e) => {
+        let rect = card.getBoundingClientRect();
+        let x = (e.clientX - rect.left) / rect.width;
+        let y = (e.clientY - rect.top) / rect.height;
+        card.style.transform = `perspective(1000px) rotateX(${(y - 0.5) * 2}deg) rotateY(${(x - 0.5) * 2}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+    });
+</script>
+</body>
+</html>

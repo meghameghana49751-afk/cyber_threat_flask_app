@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>History</h2>
+  {% if runs %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Created</th>
+          <th>Status</th>
+          <th>KMeans Conf</th>
+          <th>GMM Conf</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in runs %}
+          <tr>
+            <td>{{ r.id }}</td>
+            <td class="small">{{ r.created_at }}</td>
+            <td>
+              {% if r.overall_anomaly == 1 %}
+                <span class="pill bad">Threat</span>
+              {% else %}
+                <span class="pill good">Normal</span>
+              {% endif %}
+            </td>
+            <td>{{ "-" if r.kmeans_conf is none else ("%.1f"|format(r.kmeans_conf) ~ "%") }}</td>
+            <td>{{ "-" if r.gmm_conf is none else ("%.1f"|format(r.gmm_conf) ~ "%") }}</td>
+            <td><a href="{{ url_for('result', run_id=r.id) }}">Open</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">No predictions yet.</p>
+    <a href="{{ url_for('input_page') }}"><button>Create first prediction</button></a>
+  {% endif %}
+</div>
+{% endblock %}

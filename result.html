@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Result{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Threat Prediction Result</h2>
+  <p class="muted">Run ID: {{ run['id'] }} | Created: {{ run['created_at'] }}</p>
+
+  <h3>Overall Assessment</h3>
+  {% if result['overall_anomaly'] %}
+    <div class="pill bad">🚨 ANOMALY DETECTED (Potential Threat)</div>
+  {% else %}
+    <div class="pill good">✅ NORMAL (Low Threat)</div>
+  {% endif %}
+
+  <div class="row" style="margin-top:12px;">
+    <div class="grow card" style="box-shadow:none; border:1px solid #eee;">
+      <h3>K-Means</h3>
+      <p><strong>Anomaly:</strong> {{ result['kmeans']['is_anomaly'] }}</p>
+      <p><strong>Confidence:</strong> {{ "%.1f"|format(result['kmeans']['confidence']) }}%</p>
+      <p><strong>Distance:</strong> {{ "%.4f"|format(result['kmeans']['distance']) }}</p>
+      <p><strong>Threshold:</strong> {{ "%.4f"|format(result['kmeans']['threshold']) }}</p>
+    </div>
+
+    <div class="grow card" style="box-shadow:none; border:1px solid #eee;">
+      <h3>GMM</h3>
+      <p><strong>Anomaly:</strong> {{ result['gmm']['is_anomaly'] }}</p>
+      <p><strong>Confidence:</strong> {{ "%.1f"|format(result['gmm']['confidence']) }}%</p>
+      <p><strong>Score:</strong> {{ "%.4f"|format(result['gmm']['score']) }}</p>
+      <p><strong>Threshold:</strong> {{ "%.4f"|format(result['gmm']['threshold']) }}</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:18px;">Input Used</h3>
+  <table>
+    <tbody>
+      {% for k, v in input_data.items() %}
+        <tr><th style="width:40%">{{ k }}</th><td>{{ v }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="margin-top:14px;">
+    <a href="{{ url_for('input_page') }}"><button>New Prediction</button></a>
+    <a href="{{ url_for('history') }}"><button style="margin-left:8px;">History</button></a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cyber Threat Dashboard | AI Security Suite</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0a0f1a, #03060e);
+            min-height: 100vh;
+            color: #eef5ff;
+            position: relative;
+            padding: 2rem 1.5rem;
+        }
+
+        /* animated cyber background */
+        .bg-matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bg-matrix::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.025) 0px, rgba(0, 255, 255, 0.025) 1px, transparent 1px, transparent 50px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.025) 0px, rgba(0, 255, 255, 0.025) 1px, transparent 1px, transparent 50px);
+            animation: shiftGrid 22s linear infinite;
+        }
+
+        @keyframes shiftGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: floatGlow 18s infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, -40px) scale(1.3); }
+        }
+
+        /* dashboard wrapper */
+        .dashboard-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* welcome header with logout button */
+        .welcome-header {
+            background: rgba(8, 20, 35, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+            box-shadow: 0 15px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .greeting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .greeting h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #ffffff, #9ae6ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .user-chip {
+            background: rgba(0, 255, 255, 0.12);
+            border-radius: 3rem;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            border: 0.5px solid rgba(0,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        .user-chip i {
+            color: #0ff;
+            margin-right: 6px;
+        }
+
+        /* modern logout button */
+        .logout-btn {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid rgba(255, 80, 100, 0.5);
+            border-radius: 3rem;
+            padding: 0.5rem 1.3rem;
+            font-weight: 600;
+            color: #ffb0b8;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(220, 53, 69, 0.35);
+            border-color: #ff5a6e;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 70, 90, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: rgba(0, 30, 50, 0.7);
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+            border-left: 2px solid #0ff;
+        }
+
+        hr {
+            border-color: rgba(0, 255, 255, 0.2);
+            margin: 1rem 0;
+        }
+
+        /* detection grid */
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #0ff;
+            font-size: 1.8rem;
+        }
+
+        .detection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* modern detection card */
+        .detect-card {
+            background: rgba(12, 24, 40, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            padding: 1.8rem 1.5rem 2rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detect-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #0ff, #0ff, transparent);
+            transition: left 0.5s;
+        }
+
+        .detect-card:hover::before {
+            left: 0;
+        }
+
+        .detect-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 255, 255, 0.7);
+            box-shadow: 0 20px 35px -12px rgba(0, 200, 255, 0.3);
+            background: rgba(15, 30, 48, 0.8);
+        }
+
+        .card-icon {
+            font-size: 2.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .detect-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detect-card p {
+            color: #bfd6ff;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            margin-top: auto;
+        }
+
+        .scan-btn {
+            background: linear-gradient(105deg, #0a2b44, #041a2c);
+            border: 1px solid rgba(0, 255, 255, 0.6);
+            padding: 0.6rem 1.6rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .scan-btn:hover {
+            background: #0e4b6e;
+            border-color: #0ff;
+            box-shadow: 0 0 14px rgba(0,255,255,0.4);
+            transform: scale(1.02);
+        }
+
+        /* extra metrics row */
+        .recent-activity {
+            margin-top: 2.5rem;
+            background: rgba(5, 15, 28, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 1.5rem;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .badge-light {
+            background: rgba(0,255,200,0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+        }
+
+        .history-link {
+            color: #0ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .mock-stats {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(0,0,0,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            border-left: 3px solid #0ff;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .greeting h2 {
+                font-size: 1.4rem;
+            }
+            .user-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-matrix"></div>
+<div class="glow-orb" style="width: 400px; height: 400px; bottom: -150px; left: -100px; background: radial-gradient(circle, #0ff2, transparent);"></div>
+<div class="glow-orb" style="width: 500px; height: 500px; top: -200px; right: -150px; background: radial-gradient(circle, #2a6f9f30, transparent); animation-duration: 25s;"></div>
+
+<div class="dashboard-wrapper">
+    <!-- Welcome Header Section with explicit Logout Menu -->
+    <div class="welcome-header">
+        <div class="greeting">
+            <h2>
+                <i class="fas fa-shield-haltered" style="color:#0ff; text-shadow:0 0 6px #0ff;"></i> 
+                Cyber Threat Dashboard
+            </h2>
+            <div class="user-actions">
+                <div class="user-chip">
+                    <i class="fas fa-user-astronaut"></i> {{ user['name'] }}
+                </div>
+                <!-- LOGOUT BUTTON - visible menu item -->
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        <div class="stats-row">
+            <div class="stat-pill"><i class="fas fa-microchip"></i> Active AI Models: KMeans + GMM</div>
+            <div class="stat-pill"><i class="fas fa-chart-line"></i> Real-time anomaly scoring</div>
+            <div class="stat-pill"><i class="fas fa-database"></i> Threat history archive</div>
+        </div>
+        <hr>
+        <p style="font-size: 0.9rem; opacity: 0.9;"><i class="fas fa-robot"></i> Select a detection engine below to analyze suspicious indicators. Our ensemble ML delivers threat confidence scores.</p>
+    </div>
+
+    <!-- Detection Modules Grid -->
+    <div class="section-title">
+        <i class="fas fa-cogs"></i> 
+        <span>Threat Detection Engines</span>
+        <span style="font-size:0.7rem; background: #0ff1; padding: 2px 8px; border-radius: 40px;">zero‑day ready</span>
+    </div>
+
+    <div class="detection-grid">
+        <!-- IP Threat Detection Card -->
+        <div class="detect-card">
+            <div class="card-icon">
+                <i class="fas fa-network-wired" style="color:#2bc0ff;"></i>
+            </div>
+            <h3><i class="fas fa-shield-alt" style="font-size:1.2rem;"></i> IP Threat Intelligence</h3>
+            <p>Analyze IP behavioral metrics: attack patterns, geo distance, port variance, and anomaly probability using KMeans + GMM clustering.</p>
+            <div class="card-footer">
+                <a href="{{ url_for('input_page') }}" class="scan-btn">
+                    <i class="fas fa-search"></i> Scan IP Address
+                </a>
+            </div>
+        </div>
+
+        <!-- URL Malware Detection Card -->
+        <div class="detect-card">
+            <div class="card-icon">
+                <i class="fas fa-globe" style="color:#4cd964;"></i>
+            </div>
+            <h3><i class="fas fa-link"></i> URL Malware Scanner</h3>
+            <p>Inspect suspicious URLs, extract response headers, trust score, and identify phishing or malicious domains in real time.</p>
+            <div class="card-footer">
+                <a href="{{ url_for('urlpred') }}" class="scan-btn">
+                    <i class="fas fa-sitemap"></i> Analyze URL
+                </a>
+            </div>
+        </div>
+
+        <!-- Email Malware Detection Card -->
+        <div class="detect-card">
+            <div class="card-icon">
+                <i class="fas fa-envelope-open-text" style="color:#ffae42;"></i>
+            </div>
+            <h3><i class="fas fa-inbox"></i> Email Threat Scan</h3>
+            <p>Detect phishing attempts, malicious content, and social engineering tactics using NLP & ML classifiers.</p>
+            <div class="card-footer">
+                <a href="{{ url_for('emailpred') }}" class="scan-btn">
+                    <i class="fas fa-paper-plane"></i> Scan Email
+                </a>
+            </div>
+        </div>
+
+        <!-- File Malware Detection Card -->
+        <div class="detect-card">
+            <div class="card-icon">
+                <i class="fas fa-file-alt" style="color:#f06292;"></i>
+            </div>
+            <h3><i class="fas fa-upload"></i> File Malware Analysis</h3>
+            <p>Upload executables / documents for static & heuristic analysis. PE structure, entropy, import inspection.</p>
+            <div class="card-footer">
+                <a href="{{ url_for('filepred') }}" class="scan-btn">
+                    <i class="fas fa-shield-virus"></i> Upload & Scan
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional context: recent stats & history (dynamic based on total_runs and last_run) -->
+    {% if total_runs is defined and last_run is defined %}
+    <div class="recent-activity">
+        <div class="activity-header">
+            <span><i class="fas fa-chart-simple"></i> <strong>Detection History & Insights</strong></span>
+            <a href="{{ url_for('history') }}" class="history-link"><i class="fas fa-clock"></i> View full history →</a>
+        </div>
+        <div class="mock-stats">
+            <div class="stat-item">
+                <i class="fas fa-chart-line"></i> Total predictions: <strong>{{ total_runs }}</strong>
+            </div>
+            {% if last_run %}
+            <div class="stat-item">
+                <i class="fas fa-flag-checkered"></i> Latest result: 
+                {% if last_run['overall_anomaly'] == 1 %}
+                    <span style="color:#ff6b6b;"><i class="fas fa-exclamation-triangle"></i> Anomaly detected</span>
+                {% else %}
+                    <span style="color:#6bffb0;"><i class="fas fa-check-circle"></i> Benign / Normal</span>
+                {% endif %}
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-calendar-day"></i> Last scan: {{ last_run['created_at'][:19] if last_run['created_at'] else 'N/A' }}
+            </div>
+            {% else %}
+            <div class="stat-item">
+                <i class="fas fa-info-circle"></i> No previous runs — start your first scan.
+            </div>
+            {% endif %}
+        </div>
+        <hr style="margin: 1rem 0 0.5rem 0;">
+        <div style="font-size: 0.75rem; color: #8eb9e0; display: flex; gap: 16px; flex-wrap: wrap;">
+            <span><i class="fas fa-brain"></i> Ensemble: KMeans + GMM anomaly fusion</span>
+            <span><i class="fas fa-chart-pie"></i> Confidence metrics available per run</span>
+            <span><i class="fas fa-history"></i> Detailed result history</span>
+        </div>
+    </div>
+    {% else %}
+    <!-- fallback if variables not passed -->
+    <div class="recent-activity">
+        <div class="activity-header">
+            <span><i class="fas fa-chart-simple"></i> Threat Intelligence Hub</span>
+            <a href="{{ url_for('history') }}" class="history-link"><i class="fas fa-archive"></i> History →</a>
+        </div>
+        <div class="mock-stats">
+            <div class="stat-item"><i class="fas fa-crown"></i> Ready for analysis</div>
+            <div class="stat-item"><i class="fas fa-microchip"></i> IP, URL, Email, File modules active</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- small floating indicator -->
+    <div style="margin-top: 2rem; text-align: center; font-size: 0.7rem; opacity: 0.7;">
+        <i class="fas fa-lock"></i> End-to-end encrypted • ML predictions are local to your session
+    </div>
+</div>
+
+<!-- micro-interaction: make cards clickable to their scan button -->
+<script>
+    document.querySelectorAll('.detect-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' || e.target.closest('a')) return;
+            const btn = this.querySelector('.scan-btn');
+            if (btn) btn.click();
+        });
+    });
+</script>
+
+</body>
+</html>

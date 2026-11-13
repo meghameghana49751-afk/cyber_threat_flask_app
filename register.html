@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cyber Threat Prediction | Register Secure Account</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 15% 30%, #0a0f1f, #03060f);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 1.5rem;
+        }
+
+        /* animated grid + glitch background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .cyber-bg::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
+            animation: shiftGrid 18s infinite linear;
+        }
+
+        @keyframes shiftGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        .cyber-bg::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(0, 150, 200, 0.1), transparent 70%);
+        }
+
+        /* main glass card */
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            animation: fadeSlideUp 0.5s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card {
+            background: rgba(8, 18, 32, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 2.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 255, 0.1) inset;
+            padding: 2rem 2rem 2.2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 30px 50px -15px rgba(0, 200, 255, 0.2), 0 0 0 1px rgba(0, 255, 255, 0.3) inset;
+        }
+
+        /* header area */
+        .header-icon {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .shield-icon {
+            font-size: 3rem;
+            color: #0ff;
+            filter: drop-shadow(0 0 8px #0ff8);
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.7rem;
+            border-radius: 3rem;
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #88ddff, #5bc0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .subhead {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #9bb5e0;
+            margin-bottom: 1.8rem;
+            border-bottom: 1px dashed rgba(0, 255, 255, 0.3);
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        /* form styling */
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b3e4ff;
+            margin-bottom: 0.5rem;
+            margin-left: 0.3rem;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5bc0ff;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(0, 15, 30, 0.7);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 1.8rem;
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #f0f6ff;
+            transition: all 0.2s ease;
+            font-family: 'Inter', monospace;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2), 0 0 12px rgba(0, 255, 255, 0.3);
+            background: rgba(5, 25, 45, 0.9);
+        }
+
+        input::placeholder {
+            color: #5580a5;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        /* password strength indicator (visual) */
+        .password-strength {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            margin-left: 0.5rem;
+        }
+        .strength-bar {
+            height: 4px;
+            flex: 1;
+            background: #1e3a4a;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .strength-bar.active {
+            background: #0ff;
+            box-shadow: 0 0 4px #0ff;
+        }
+        .strength-text {
+            font-size: 0.65rem;
+            color: #89b9e2;
+            margin-top: 5px;
+            margin-left: 0.5rem;
+        }
+
+        /* button styling */
+        .btn-register {
+            background: linear-gradient(95deg, #0b3b52, #041e30);
+            border: none;
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 3rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 0.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(95deg, #0f5577, #072a40);
+            border-color: #0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(0, 200, 255, 0.3);
+        }
+
+        .btn-register:active {
+            transform: translateY(1px);
+        }
+
+        .login-prompt {
+            text-align: center;
+            margin-top: 1.8rem;
+            font-size: 0.85rem;
+            color: #bcd0ff;
+        }
+
+        .login-prompt a {
+            color: #0ff;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed #0ff;
+            transition: 0.2s;
+        }
+
+        .login-prompt a:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+            text-shadow: 0 0 4px #0ff;
+        }
+
+        .security-note {
+            background: rgba(0, 20, 40, 0.6);
+            border-radius: 2rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 1.5rem;
+            border: 0.5px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .security-note i {
+            color: #2ef7b0;
+        }
+
+        .flash-messages {
+            margin-bottom: 1.2rem;
+        }
+
+        .flash {
+            background: rgba(220, 53, 69, 0.2);
+            border-left: 4px solid #ff5e7e;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            backdrop-filter: blur(4px);
+            margin-bottom: 0.8rem;
+            color: #ffc6d0;
+        }
+
+        .flash.success {
+            background: rgba(0, 255, 180, 0.1);
+            border-left-color: #0ff0a0;
+            color: #b5ffd9;
+        }
+
+        .small {
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        @media (max-width: 550px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cyber-bg"></div>
+
+<div class="register-container">
+    <div class="glass-card">
+        <div class="header-icon">
+            <i class="fas fa-shield-virus shield-icon"></i>
+        </div>
+        <h2>Join Threat Defense</h2>
+        <div style="text-align: center;">
+            <span class="subhead"><i class="fas fa-laptop-code"></i> Secure Access · ML Predictions</span>
+        </div>
+
+        <!-- flash messages injected dynamically (if any) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}"><i class="fas fa-info-circle"></i> {{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('register_post') }}" id="registerForm">
+            <div class="input-group">
+                <label><i class="far fa-user-circle"></i> FULL NAME</label>
+                <div class="input-icon">
+                    <i class="fas fa-user-astronaut"></i>
+                    <input type="text" name="name" placeholder="e.g., Alex Rivera" required autocomplete="name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="far fa-envelope"></i> EMAIL ADDRESS</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="security@cyberlab.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-key"></i> PASSWORD</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" id="password" placeholder="••••••••" minlength="6" required autocomplete="new-password">
+                </div>
+                <!-- password strength indicator (visual only, real validation on backend) -->
+                <div class="password-strength" id="strengthBars">
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                </div>
+                <div class="strength-text" id="strengthText"><i class="fas fa-shield-alt"></i> 6+ characters recommended</div>
+            </div>
+
+            <button type="submit" class="btn-register">
+                <i class="fas fa-user-shield"></i> Register & Encrypt
+                <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="login-prompt">
+                Already have an account? <a href="{{ url_for('login') }}">Authenticate →</a>
+            </div>
+
+            <div class="security-note">
+                <i class="fas fa-database"></i> 
+                <span>Passwords hashed with bcrypt • Encrypted transmission</span>
+                <i class="fas fa-shield-haltered"></i>
+            </div>
+            <p class="small muted" style="margin-top:12px; color:#6095b5;">
+                <i class="fas fa-check-circle"></i> By registering you agree to our AI threat analysis terms.
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- password strength checker client-side (nice UX) -->
+<script>
+    const passwordInput = document.getElementById('password');
+    const strengthBars = document.querySelectorAll('.strength-bar');
+    const strengthText = document.getElementById('strengthText');
+
+    function evaluateStrength(password) {
+        let score = 0;
+        if (!password) return 0;
+        if (password.length >= 6) score += 1;
+        if (password.length >= 10) score += 1;
+        if (/[A-Z]/.test(password)) score += 1;
+        if (/[0-9]/.test(password)) score += 1;
+        if (/[^A-Za-z0-9]/.test(password)) score += 1;
+        // cap at 4 bars for simplicity
+        return Math.min(4, Math.floor(score));
+    }
+
+    function updateStrengthMeter() {
+        const pwd = passwordInput.value;
+        const strength = evaluateStrength(pwd);
+        // reset bars
+        strengthBars.forEach((bar, idx) => {
+            if (idx < strength) {
+                bar.classList.add('active');
+                let intensity = '';
+                if (strength === 1) intensity = '#3bc0fc';
+                else if (strength === 2) intensity = '#3cf0b0';
+                else if (strength === 3) intensity = '#e0ff40';
+                else intensity = '#0ff';
+                bar.style.background = intensity;
+                bar.style.boxShadow = `0 0 3px ${intensity}`;
+            } else {
+                bar.classList.remove('active');
+                bar.style.background = '#1e3a4a';
+                bar.style.boxShadow = 'none';
+            }
+        });
+        if (pwd.length === 0) {
+            strengthText.innerHTML = `<i class="fas fa-shield-alt"></i> Enter a strong password (min 6 chars)`;
+        } else if (strength <= 1 && pwd.length >=6) {
+            strengthText.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Weak — add uppercase / numbers`;
+        } else if (strength === 2) {
+            strengthText.innerHTML = `<i class="fas fa-chart-line"></i> Medium — add symbols or longer length`;
+        } else if (strength === 3) {
+            strengthText.innerHTML = `<i class="fas fa-shield-virus"></i> Strong! great security`;
+        } else if (strength >= 4) {
+            strengthText.innerHTML = `<i class="fas fa-crown"></i> Very Strong — military grade`;
+        } else {
+            strengthText.innerHTML = `<i class="fas fa-lock"></i> At least 6 characters required`;
+        }
+    }
+
+    passwordInput.addEventListener('input', updateStrengthMeter);
+    updateStrengthMeter();
+
+    // Additional subtle effect: animate glitch on card on hover
+    const card = document.querySelector('.glass-card');
+    card.addEventListener('mousemove', (e) => {
+        let rect = card.getBoundingClientRect();
+        let x = (e.clientX - rect.left) / rect.width;
+        let y = (e.clientY - rect.top) / rect.height;
+        card.style.borderImage = `radial-gradient(circle at ${x*100}% ${y*100}%, rgba(0,255,255,0.5), transparent 80%) 1`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.borderImage = '';
+    });
+</script>
+</body>
+</html>
